@@ -11,14 +11,14 @@
             </p>
         </div>
     </header>
-    <!--Bets-->
     <div class="row" style="display: flex, flex-wrap: wrap">
         <% bets.forEach(function(bet){ %>
             <div class="col-md-3 col-sm-6">
                 <div class="thumbnail">
-                    <h4><%= bet.date %></h4>
-                    <img src="<%= bet.imageURL %>">
                     <h4><%= bet.description %></h4>
+                    <img src="<%= bet.imageURL %>">
+                    <h4><%= bet.date %></h4>
+                    <p><a href="/bets/<%=bet._id%>" class="btn btn-primary">More Info</a></p>
                 </div>
             </div>
         <% });%>

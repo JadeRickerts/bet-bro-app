@@ -29,20 +29,20 @@ var betSchema = new mongoose.Schema({
 var Bet = mongoose.model("Bet", betSchema);
 
 //SEED DATABASE
-Bet.create({
-  description: "England vs France",
-  imageURL: "http://via.placeholder.com/300.png/09f/fff",
-  date: "23-07-2018",
-  betType: "matchBet"
-}, function(err, bet){
-  if(err){
-    console.log(err);
-  }
-  else {
-    console.log("NEWLY CREATED BET");
-    console.log(bet);
-  }
-});
+// Bet.create({
+//   description: "England vs France",
+//   imageURL: "http://via.placeholder.com/300.png/09f/fff",
+//   date: "23-07-2018",
+//   betType: "matchBet"
+// }, function(err, bet){
+//   if(err){
+//     console.log(err);
+//   }
+//   else {
+//     console.log("NEWLY CREATED BET");
+//     console.log(bet);
+//   }
+// });
 
 //ROUTES
 //Landing Page
@@ -60,7 +60,7 @@ app.get("/bets", function(req, res){
       console.log(err);
     }
     else {
-      res.render("bets.ejs", {bets: allBets});
+      res.render("index.ejs", {bets: allBets});
     }
   });
 });
@@ -71,9 +71,15 @@ app.post("/bets", function(req, res){
    //get data from form and add to the bets array
    var description = req.body.description;
    var date = req.body.date;
-   var image = "https://upload.wikimedia.org/wikipedia/commons/8/88/Simple_Soccer_Ball.svg";
+   var image = "http://via.placeholder.com/300.png/09f/fff";
+   var betType = req.body.betType;
    //Create a new object with the variables taken from the form.
-   var newBet = {description: description, imageURL: image, date: date};
+   var newBet = {
+   	description: description, 
+   	imageURL: image, 
+   	date: date,
+   	betType: betType
+   };
    //Create new bet and save to DB
    Bet.create(newBet, function(err, newlyCreated){
     if(err){
@@ -95,6 +101,15 @@ app.get("/bets/new", function(req, res) {
 //SHOW ROUTE
 app.get("/bets/:id", function(req, res){
   //Find the bet with the provided ID
-  //Render Show page template with the campground
-  res.send("This will be the show page one day!");
+  Bet.findById(req.params.id, function(err, foundBet){
+  	if(err){
+  		console.log(err);
+  	}
+  	else {
+  		//Render Show page template with the campground
+  		res.render("show.ejs", {
+  			bet: foundBet
+  		});
+  	}
+  });
 });
