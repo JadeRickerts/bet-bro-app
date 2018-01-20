@@ -2,8 +2,15 @@
 var express = require("express"),
 app         = express(),
 bodyParser  = require("body-parser"),
-mongoose    = require("mongoose");
+mongoose    = require("mongoose"),
+Bet 		= require("./models/bet.js"),
+seedDB		= require("./seeds.js"),
+path 		= require('path');
 
+//Seed theDatabase
+seedDB();
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 //SETTINGS
 // app.set("view eninge", "ejs");
@@ -13,36 +20,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.listen(3000, function(){
   console.log("Server started on PORT 3000")
 });
-
 //DATABASE CONFIG
 mongoose.connect('mongodb://localhost/bet_bro');
-
-//DATABASE SCHEMA SETUP
-var betSchema = new mongoose.Schema({
-  description: String,
-  imageURL: String,
-  date: String,
-  betType: String
-});
-
-//BET MODEL
-var Bet = mongoose.model("Bet", betSchema);
-
-//SEED DATABASE
-// Bet.create({
-//   description: "England vs France",
-//   imageURL: "http://via.placeholder.com/300.png/09f/fff",
-//   date: "23-07-2018",
-//   betType: "matchBet"
-// }, function(err, bet){
-//   if(err){
-//     console.log(err);
-//   }
-//   else {
-//     console.log("NEWLY CREATED BET");
-//     console.log(bet);
-//   }
-// });
 
 //ROUTES
 //Landing Page
