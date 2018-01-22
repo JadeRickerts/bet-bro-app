@@ -4,25 +4,28 @@ app         = express(),
 bodyParser  = require("body-parser"),
 mongoose    = require("mongoose"),
 Bet 		= require("./models/bet.js"),
-seedDB		= require("./seeds.js"),
-path 		= require('path');
+path 		= require('path'),
+seedDB		= require("./seeds.js");
+
+//DATABASE CONFIG
+mongoose.connect('mongodb://localhost/bet_bro');
+
+//SETTINGS
+app.use(bodyParser.urlencoded({extended: true}));
+// app.set("view eninge", "ejs");
 
 //Seed theDatabase
 seedDB();
 
+//Serve public folder - path setup
 app.use(express.static(path.join(__dirname, 'public')));
-
-//SETTINGS
-// app.set("view eninge", "ejs");
-app.use(bodyParser.urlencoded({extended: true}));
 
 //SERVER CONFIG
 app.listen(3000, function(){
   console.log("Server started on PORT 3000")
 });
-//DATABASE CONFIG
-mongoose.connect('mongodb://localhost/bet_bro');
 
+//=========================================================
 //ROUTES
 //Landing Page
 app.get("/", function(req, res){
@@ -80,11 +83,12 @@ app.get("/bets/new", function(req, res) {
 //SHOW ROUTE
 app.get("/bets/:id", function(req, res){
   //Find the bet with the provided ID
-  Bet.findById(req.params.id, function(err, foundBet){
+  Bet.findById(req.params.id).populate("comments").exec(function(err, foundBet){
   	if(err){
   		console.log(err);
   	}
   	else {
+  		console.log(foundBet);
   		//Render Show page template with the campground
   		res.render("show.ejs", {
   			bet: foundBet

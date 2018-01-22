@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Bet = require("./models/bet.js");
-var Comment = require("./models/comment");
+var Comment = require("./models/comment.js");
 
 //Seed Data
 var data = [
@@ -50,7 +50,7 @@ function seedDB(){
 							console.log(err);
 						}
 						else{
-							bet.comments.push(comment);
+							bet.comments.push(comment._id);
 							bet.save();
 							console.log("created new comment");
 						}

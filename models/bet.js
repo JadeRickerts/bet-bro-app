@@ -5,7 +5,13 @@ var betSchema = new mongoose.Schema({
   description: String,
   imageURL: String,
   date: String,
-  betType: String
+  betType: String,
+  comments: [
+  	{
+  		type: mongoose.Schema.Types.ObjectId,
+  		ref: "Comment"
+  	}
+  ]
 });
 
 //BET MODEL
