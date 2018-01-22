@@ -69,3 +69,7 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 * Discuss nested routes
 * Add comment new and create routes
 * Add the new comment form
+
+#12. Style Show Page
+* Add sidebar to show page
+* Display comments nicely
