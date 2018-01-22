@@ -3,9 +3,10 @@ var express = require("express"),
 app         = express(),
 bodyParser  = require("body-parser"),
 mongoose    = require("mongoose"),
-Bet 		= require("./models/bet.js"),
-path 		= require('path'),
-seedDB		= require("./seeds.js");
+Bet 		    = require("./models/bet.js"),
+Comment     = require("./models/comment.js")
+path 		    = require('path'),
+seedDB		  = require("./seeds.js");
 
 //DATABASE CONFIG
 mongoose.connect('mongodb://localhost/bet_bro');
@@ -42,7 +43,7 @@ app.get("/bets", function(req, res){
       console.log(err);
     }
     else {
-      res.render("index.ejs", {bets: allBets});
+      res.render("bets/index.ejs", {bets: allBets});
     }
   });
 });
@@ -77,7 +78,7 @@ app.post("/bets", function(req, res){
 //NEW ROUTE
 //New Bet Page
 app.get("/bets/new", function(req, res) {
-   res.render("new.ejs");
+   res.render("bets/new.ejs");
 });
 
 //SHOW ROUTE
@@ -90,9 +91,52 @@ app.get("/bets/:id", function(req, res){
   	else {
   		console.log(foundBet);
   		//Render Show page template with the campground
-  		res.render("show.ejs", {
+  		res.render("bets/show.ejs", {
   			bet: foundBet
   		});
   	}
   });
+});
+
+//=================================================
+//Comments Routes
+app.get("/bets/:id/comments/new", function(req, res){
+	//Find bet by ID
+  Bet.findById(req.params.id, function(err, foundBet){
+    if(err){
+      console.log(err);
+    }
+    else{
+      //Render template page
+      res.render("comments/new.ejs", {
+        //Send bet object found earlier in the route
+        bet: foundBet
+      });
+    }
+  });
+});
+
+app.post("/bets/:id/comments", function(req, res){
+  //Lookup bet using ID
+  Bet.findById(req.params.id, function(err, foundBet){
+    if(err){
+      console.log(err);
+      res.redirect("/bets");
+    }
+    else{
+      //Create a new comment
+      Comment.create(req.body.comment, function(err, createdComment){
+        if(err){
+          console.log(err);
+        }
+        else {
+          //Connect new comment to campground
+          foundBet.comments.push(createdComment);
+          foundBet.save();
+          //Redirect to bet show page
+          res.redirect("/bets/" + foundBet._id);
+        }
+      })
+    }
+  })
 });

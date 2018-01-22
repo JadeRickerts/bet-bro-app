@@ -64,3 +64,8 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 #10. Add the Comment model!
 * Make our errors go away!
 * Display comments on bet show page
+
+#11. Comment New/Create
+* Discuss nested routes
+* Add comment new and create routes
+* Add the new comment form
