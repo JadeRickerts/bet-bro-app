@@ -11,6 +11,19 @@ User          = require("./models/user"),
 path 		      = require('path'),
 seedDB		    = require("./seeds.js");
 
+//PASSPORT CONFIG
+app.use(require("express-session")({
+  secret: "This is the best social betting app!",
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //DATABASE CONFIG
 mongoose.connect('mongodb://localhost/bet_bro');
 
@@ -142,4 +155,25 @@ app.post("/bets/:id/comments", function(req, res){
       })
     }
   })
+});
+
+//=================================================
+//Auth Routes
+//Show register form
+app.get("/register", function(req, res){
+  res.render("register.ejs");
+});
+
+//Handle signup logic
+app.post("/register", function(req, res){
+  var newUser = new User({username: req.body.username});
+  User.register(newUser, req.body.password, function(err, user){
+    if(err){
+      console.log(err);
+      return res.render("register.ejs");
+    }
+    passport.authenticate("local")(req, res, function(){
+      res.redirect("/bets");
+    })
+  });
 });
