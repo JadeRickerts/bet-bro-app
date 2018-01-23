@@ -90,3 +90,10 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 #16. Auth Pt. 3 - Login
 * Add login routes
 * Add login template
+
+#17. Auth Pt. 4 - Logout/Navbar
+* Add logout route
+* Prevent user from adding a comment if not signed in
+* Add links to navbar
+* Show/hide auth links correctly
+

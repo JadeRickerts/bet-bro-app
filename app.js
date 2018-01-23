@@ -100,6 +100,7 @@ app.get("/bets/new", function(req, res) {
 //SHOW ROUTE
 app.get("/bets/:id", function(req, res){
   //Find the bet with the provided ID
+  console.log("===================" + req.params.id);
   Bet.findById(req.params.id).populate("comments").exec(function(err, foundBet){
   	if(err){
   		console.log(err);
@@ -116,7 +117,7 @@ app.get("/bets/:id", function(req, res){
 
 //=================================================
 //Comments Routes
-app.get("/bets/:id/comments/new", function(req, res){
+app.get("/bets/:id/comments/new", isLoggedIn, function(req, res){
 	//Find bet by ID
   Bet.findById(req.params.id, function(err, foundBet){
     if(err){
@@ -132,7 +133,7 @@ app.get("/bets/:id/comments/new", function(req, res){
   });
 });
 
-app.post("/bets/:id/comments", function(req, res){
+app.post("/bets/:id/comments", isLoggedIn, function(req, res){
   //Lookup bet using ID
   Bet.findById(req.params.id, function(err, foundBet){
     if(err){
@@ -189,3 +190,17 @@ app.post("/login", passport.authenticate("local", {
   failureRedirect: "/login"
   }), function(req, res){
 });
+
+//Logout logic route
+app.get("/logout", function(req, res){
+  req.logout();
+  res.redirect("/bets");
+});
+
+//middleware
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect("/login");
+}
