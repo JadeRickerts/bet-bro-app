@@ -24,6 +24,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//pass the currentUser object to all the templates/all routes
+app.use(function(req, res, next){
+  res.locals.currentUser = req.user;
+  next();
+});
+
 //DATABASE CONFIG
 mongoose.connect('mongodb://localhost/bet_bro');
 
@@ -59,7 +65,7 @@ app.get("/bets", function(req, res){
       console.log(err);
     }
     else {
-      res.render("bets/index.ejs", {bets: allBets});
+      res.render("bets/index.ejs", {bets: allBets, currentUser: req.user});
     }
   });
 });

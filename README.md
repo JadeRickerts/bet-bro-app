@@ -97,3 +97,5 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 * Add links to navbar
 * Show/hide auth links correctly
 
+#18. Auth Pt. 5 - Show/Hide Links
+* Show/hide auth links in navbar correctly
