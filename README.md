@@ -73,3 +73,16 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 #12. Style Show Page
 * Add sidebar to show page
 * Display comments nicely
+
+#13. Finish Styling Show Page
+* Add public directory
+* Add custom stylesheet
+
+#14. Auth Pt. 1 - Add User Model
+* Install all packages needed for auth
+* Define User Models
+
+#15. Auth Pt. 2 - Register
+* Configure Passport
+* Add register routes
+* Add register template

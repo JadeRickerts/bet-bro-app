@@ -1,12 +1,15 @@
 //REQUIRED MODULES
-var express = require("express"),
-app         = express(),
-bodyParser  = require("body-parser"),
-mongoose    = require("mongoose"),
-Bet 		    = require("./models/bet.js"),
-Comment     = require("./models/comment.js")
-path 		    = require('path'),
-seedDB		  = require("./seeds.js");
+var express   = require("express"),
+app           = express(),
+bodyParser    = require("body-parser"),
+mongoose      = require("mongoose"),
+passport      = require("passport"),
+LocalStrategy = require("passport-local"),
+Bet 		      = require("./models/bet.js"),
+Comment       = require("./models/comment.js"),
+User          = require("./models/user"),
+path 		      = require('path'),
+seedDB		    = require("./seeds.js");
 
 //DATABASE CONFIG
 mongoose.connect('mongodb://localhost/bet_bro');
