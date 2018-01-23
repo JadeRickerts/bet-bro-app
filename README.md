@@ -86,3 +86,7 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 * Configure Passport
 * Add register routes
 * Add register template
+
+#16. Auth Pt. 3 - Login
+* Add login routes
+* Add login template

@@ -177,3 +177,15 @@ app.post("/register", function(req, res){
     })
   });
 });
+
+//Show login form
+app.get("/login", function(req, res){
+  res.render("login.ejs");
+});
+
+//Handle login logic
+app.post("/login", passport.authenticate("local", {
+  successRedirect: "/bets",
+  failureRedirect: "/login"
+  }), function(req, res){
+});
