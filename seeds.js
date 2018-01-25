@@ -34,30 +34,30 @@ function seedDB(){
 		}
 		console.log("removed campgrounds");
 		//add a few bets
-		data.forEach(function(seed){
-			Bet.create(seed, function(err, bet){
-				if(err){
-					console.log(err);
-				}
-				else{
-					console.log("added a bet");
-					//create a comment
-					Comment.create({
-						text: "Change the bet amount",
-						author: "Homer Simpson"
-					}, function(err, comment){
-						if(err){
-							console.log(err);
-						}
-						else{
-							bet.comments.push(comment._id);
-							bet.save();
-							console.log("created new comment");
-						}
-					});
-				}
-			})
-		});
+		// data.forEach(function(seed){
+		// 	Bet.create(seed, function(err, bet){
+		// 		if(err){
+		// 			console.log(err);
+		// 		}
+		// 		else{
+		// 			console.log("added a bet");
+		// 			//create a comment
+		// 			Comment.create({
+		// 				text: "Change the bet amount",
+		// 				author: "Homer Simpson"
+		// 			}, function(err, comment){
+		// 				if(err){
+		// 					console.log(err);
+		// 				}
+		// 				else{
+		// 					bet.comments.push(comment._id);
+		// 					bet.save();
+		// 					console.log("created new comment");
+		// 				}
+		// 			});
+		// 		}
+		// 	})
+		// });
 	});
 };
 

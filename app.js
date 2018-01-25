@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // app.set("view eninge", "ejs");
 
 //Seed theDatabase
-seedDB();
+// seedDB();
 
 //Serve public folder - path setup
 app.use(express.static(path.join(__dirname, 'public')));

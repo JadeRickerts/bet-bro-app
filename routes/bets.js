@@ -5,11 +5,11 @@ var Bet = require("../models/bet");
 
 //INDEX ROUTE
 //View Bets Page
-router.get("/", function(req, res){
+router.get("/", function (req, res) {
   //Connect to mongoose db data
   //Get all bets from DB
-  Bet.find({}, function(err, allBets){
-    if(err){
+  Bet.find({}, function (err, allBets) {
+    if (err) {
       console.log(err);
     }
     else {

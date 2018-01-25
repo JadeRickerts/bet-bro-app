@@ -36,9 +36,16 @@ router.post("/", isLoggedIn, function(req, res){
           console.log(err);
         }
         else {
+          //Add username and ID to comment
+          createdComment.author.id = req.user._id;
+          createdComment.author.username = req.user.username;
+          //Save Comment
+          createdComment.save();
+          console.log(createdComment);
           //Connect new comment to campground
-          foundBet.comments.push(createdComment);
+          foundBet.comments.push(createdComment._id);
           foundBet.save();
+          console.log("====This is the created comment: \n" + createdComment);
           //Redirect to bet show page
           res.redirect("/bets/" + foundBet._id);
         }
