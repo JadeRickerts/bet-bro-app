@@ -20,18 +20,23 @@ router.get("/", function (req, res) {
 
 //CREATE ROUTE
 //Create Bets Page
-router.post("/", function(req, res){
+router.post("/", isLoggedIn, function(req, res){
    //get data from form and add to the bets array
    var description = req.body.description;
    var date = req.body.date;
-   var image = "http://via.placeholder.com/300.png/09f/fff";
+   var image = "https://screenshotlayer.com/images/assets/placeholder.png";
    var betType = req.body.betType;
+   var author = {
+    id: req.user._id,
+    username: req.user.username
+   };
    //Create a new object with the variables taken from the form.
    var newBet = {
    	description: description, 
    	imageURL: image, 
    	date: date,
-   	betType: betType
+   	betType: betType,
+    author: author
    };
    //Create new bet and save to DB
    Bet.create(newBet, function(err, newlyCreated){
@@ -40,6 +45,7 @@ router.post("/", function(req, res){
     }
     else {
       //redirect back to bets page
+      console.log(newlyCreated);
       res.redirect("/bets");
     }
    });
@@ -47,7 +53,7 @@ router.post("/", function(req, res){
 
 //NEW ROUTE
 //New Bet Page
-router.get("/new", function(req, res) {
+router.get("/new", isLoggedIn, function(req, res) {
    res.render("bets/new.ejs");
 });
 
@@ -69,5 +75,13 @@ router.get("/:id", function(req, res){
   	}
   });
 });
+
+//MIDDLEWARE
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect("/login");
+}
 
 module.exports = router;

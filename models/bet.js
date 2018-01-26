@@ -6,12 +6,19 @@ var betSchema = new mongoose.Schema({
   imageURL: String,
   date: String,
   betType: String,
+  author: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    username: String
+  },
   comments: [
   	{
   		type: mongoose.Schema.Types.ObjectId,
   		ref: "Comment"
   	}
-  ]
+  ],
 });
 
 //BET MODEL
