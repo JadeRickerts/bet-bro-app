@@ -1,15 +1,16 @@
 //REQUIRED MODULES
-var express   = require("express"),
-app           = express(),
-bodyParser    = require("body-parser"),
-mongoose      = require("mongoose"),
-passport      = require("passport"),
-LocalStrategy = require("passport-local"),
-Bet 		      = require("./models/bet.js"),
-Comment       = require("./models/comment.js"),
-User          = require("./models/user"),
-path 		      = require('path'),
-seedDB		    = require("./seeds.js");
+var express     = require("express"),
+app             = express(),
+bodyParser      = require("body-parser"),
+mongoose        = require("mongoose"),
+passport        = require("passport"),
+LocalStrategy   = require("passport-local"),
+methodOverride  = require("method-override"),
+Bet 		        = require("./models/bet.js"),
+Comment         = require("./models/comment.js"),
+User            = require("./models/user"),
+path 		        = require('path'),
+seedDB		      = require("./seeds.js");
 
 
 //REQUIRED ROUTES
@@ -48,6 +49,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //Serve public folder - path setup
 app.use(express.static(path.join(__dirname, 'public')));
+
+//METHOD OVERRIDE FOR ROUTES (PUT & DELETE)
+app.use(methodOverride("_method"));
 
 //ROUTES
 app.use(indexRoutes);

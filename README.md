@@ -110,3 +110,10 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 #21. Users + Campgrounds
 * Prevent an unauthenticated user from creating a campground
 * Save username + id to newly created campground.
+
+#22. Editing Bets
+* Add Method-Override
+* Add Edit Route for Bets
+* Add Link to Edit Page
+* Add Update Route
+* Fix $set problem

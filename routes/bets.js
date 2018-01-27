@@ -2,7 +2,7 @@
 var express = require("express");
 var router = express.Router();
 var Bet = require("../models/bet");
-
+//============================================================================//
 //INDEX ROUTE
 //View Bets Page
 router.get("/", function (req, res) {
@@ -76,6 +76,31 @@ router.get("/:id", function(req, res){
   });
 });
 
+//EDIT BET ROUTE
+router.get("/:id/edit", function(req, res){
+  Bet.findById(req.params.id, function(err, foundBet){
+    if(err){
+      console.log(err);
+    } else {
+      res.render("bets/edit.ejs", {bet: foundBet});
+    }
+  })
+})
+
+//UPDATE BET ROUTE
+router.put("/:id", function(req, res){
+  //Find and update the correct bet
+  Bet.findByIdAndUpdate(req.params.id, req.body.bet, function(err, updatedBet){
+    if(err){
+      res.redirect("/bets");
+    } else {
+      res.redirect("/bets/" + req.params.id);
+    }
+  })
+  //redirect to show page
+})
+
+//============================================================================//
 //MIDDLEWARE
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
