@@ -121,3 +121,8 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 #23. Deleting Bets
 * Add Destroy Route
 * Add Delete Button
+
+#24. Authorization
+* User can only edit his/her bets
+* User can only delete his/her bets
+* Hide/Show edit and delete buttons

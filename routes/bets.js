@@ -77,18 +77,14 @@ router.get("/:id", function(req, res){
 });
 
 //EDIT BET ROUTE
-router.get("/:id/edit", function(req, res){
+router.get("/:id/edit", checkBetOwnership, function(req, res){
   Bet.findById(req.params.id, function(err, foundBet){
-    if(err){
-      console.log(err);
-    } else {
-      res.render("bets/edit.ejs", {bet: foundBet});
-    }
-  })
-})
+    res.render("bets/edit.ejs", {bet: foundBet});
+  });
+});
 
 //UPDATE BET ROUTE
-router.put("/:id", function(req, res){
+router.put("/:id", checkBetOwnership, function(req, res){
   //Find and update the correct bet
   Bet.findByIdAndUpdate(req.params.id, req.body.bet, function(err, updatedBet){
     if(err){
@@ -98,10 +94,10 @@ router.put("/:id", function(req, res){
       res.redirect("/bets/" + req.params.id);
     }
   })
-})
+});
 
 //DESTROY BET ROUTE
-router.delete("/:id", function(req, res){
+router.delete("/:id", checkBetOwnership, function(req, res){
   Bet.findByIdAndRemove(req.params.id, function(err){
     if(err){
       res.redirect("/bets");
@@ -118,6 +114,26 @@ function isLoggedIn(req, res, next){
     return next();
   }
   res.redirect("/login");
+}
+
+function checkBetOwnership(req, res, next) {
+  //is user logged in at all
+  if(req.isAuthenticated()) {
+    Bet.findById(req.params.id, function(err, foundBet) {
+      if(err){
+        res.redirect("back");
+      } else {
+        //does user own this bet
+        if(foundBet.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect("back");
+        }
+      }
+    });
+  } else {
+    res.redirect("back");
+  }
 }
 
 module.exports = router;
