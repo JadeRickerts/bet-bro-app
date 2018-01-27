@@ -117,3 +117,7 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 * Add Link to Edit Page
 * Add Update Route
 * Fix $set problem
+
+#23. Deleting Bets
+* Add Destroy Route
+* Add Delete Button

@@ -94,10 +94,21 @@ router.put("/:id", function(req, res){
     if(err){
       res.redirect("/bets");
     } else {
+      //redirect to show page
       res.redirect("/bets/" + req.params.id);
     }
   })
-  //redirect to show page
+})
+
+//DESTROY BET ROUTE
+router.delete("/:id", function(req, res){
+  Bet.findByIdAndRemove(req.params.id, function(err){
+    if(err){
+      res.redirect("/bets");
+    } else {
+      res.redirect("/bets");
+    }
+  })
 })
 
 //============================================================================//
