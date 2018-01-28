@@ -122,7 +122,22 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 * Add Destroy Route
 * Add Delete Button
 
-#24. Authorization
+#24. Authorization Part 1: Bets
 * User can only edit his/her bets
 * User can only delete his/her bets
-* Hide/Show edit and delete buttons
+* Hide/Show edit and delete buttons for the user's bets
+
+#25. Editiing Comments
+* Add Edit route for comments
+* Add edit button
+* Add Update Route
+
+#26. Deleting Comments
+* Add Destroy route
+* Add Delete button
+
+#27. Authorization Part 2: Comments
+* User can only edit his/her comments
+* User can only delete his/her comments
+* Hide/Show edit and delete buttons for the user's comments
+* Refactor Middleware
