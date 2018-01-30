@@ -11,6 +11,7 @@ router.get("/", function (req, res) {
   //Get all bets from DB
   Bet.find({}, function (err, allBets) {
     if (err) {
+      req.flash("error", "Bet not found.");
       console.log(err);
     }
     else {
@@ -46,7 +47,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     }
     else {
       //redirect back to bets page
-      console.log(newlyCreated);
+      req.flash("success", "Bet created.");
       res.redirect("/bets");
     }
    });
@@ -89,9 +90,11 @@ router.put("/:id", middleware.checkBetOwnership, function(req, res){
   //Find and update the correct bet
   Bet.findByIdAndUpdate(req.params.id, req.body.bet, function(err, updatedBet){
     if(err){
+      req.flash("error", "Something went wrong.");
       res.redirect("/bets");
     } else {
       //redirect to show page
+      req.flash("success", "Bet updated.");
       res.redirect("/bets/" + req.params.id);
     }
   })
@@ -101,8 +104,10 @@ router.put("/:id", middleware.checkBetOwnership, function(req, res){
 router.delete("/:id", middleware.checkBetOwnership, function(req, res){
   Bet.findByIdAndRemove(req.params.id, function(err){
     if(err){
+      req.flash("error", "Something went wrong.");
       res.redirect("/bets");
     } else {
+      req.flash("success", "Bet deleted.");
       res.redirect("/bets");
     }
   })

@@ -3,6 +3,7 @@ var express     = require("express"),
 app             = express(),
 bodyParser      = require("body-parser"),
 mongoose        = require("mongoose"),
+flash           = require("connect-flash"),
 passport        = require("passport"),
 LocalStrategy   = require("passport-local"),
 methodOverride  = require("method-override"),
@@ -31,9 +32,14 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//CONNECT FLASH PACKAGE
+app.use(flash());
+
 //pass the currentUser object to all the templates/all routes
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   next();
 });
 
