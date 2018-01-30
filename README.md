@@ -10,12 +10,13 @@
 * Image
 * Date
 ### Example
+```
 [
 	{description: “Germany vs Albania”, image: “http://www.bet-bro.com”, date: “23/06/17”},
 	{description: “Brazil vs Argentina”, image: “http://www.bet-bro.com”, date: “24/06/17”},
 	{description: “France vs England”, image: “http://www.bet-bro.com”, date: “27/06/17”},
 ]
-
+```
 # 2.	Layout and Style
 * Create Header and Footer
 * Add Bootstrap
@@ -46,11 +47,12 @@
 * Add a show route/template
 
 ## RESTFUL ROUTES
-Name		url		verb		description
-INDEX		/dogs		GET		Display a list of all dogs
-NEW 		/dogs/new	GET		Displays form to make a new dog
-CREATE		/dogs		POST		Add new dog to DB
-SHOW		/dogs/:id	GET		Shows info about one dog
+| Name		| url			| verb		| description
+| ----------- | ----------- | ----------- | ----------- |
+| INDEX		| /dogs			| GET		| Display a list of all dogs
+| NEW 		| /dogs/new		| GET		| Displays form to make a new dog
+| CREATE	| /dogs			| POST		| Add new dog to DB
+| SHOW		| /dogs/:id		| GET		| Shows info about one dog
 
 # 8. Refactor Mongoose Code
 * Create a models directory
@@ -65,7 +67,7 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 * Make our errors go away!
 * Display comments on bet show page
 
-#1 1. Comment New/Create
+# 11. Comment New/Create
 * Discuss nested routes
 * Add comment new and create routes
 * Add the new comment form
@@ -107,7 +109,7 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 * Associate users and comments
 * Save author's name to a comment automatically
 
-#21. Users + Campgrounds
+# 21. Users + Campgrounds
 * Prevent an unauthenticated user from creating a campground
 * Save username + id to newly created campground.
 
@@ -141,3 +143,12 @@ SHOW		/dogs/:id	GET		Shows info about one dog
 * User can only delete his/her comments
 * Hide/Show edit and delete buttons for the user's comments
 * Refactor Middleware
+
+# 28. Flash Messages
+* Add flash messages to routes and middleware
+
+# 29. Group Match Bets
+* Add routes and model links to app.js 
+* Create route file
+* Add index and new routes
+* Add index and new pages
