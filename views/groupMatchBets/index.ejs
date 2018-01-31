@@ -1,5 +1,30 @@
 <% include ../partials/header.ejs %>
 
-<h1>This is the group match bet index page</h1>
+<div class="container">
+    <!--The header - JUMBOTRON-->
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome To Bet-Bro</h1>
+            <p>Keep track of your football bets with your bros with Bet-Bro!</p>
+            <p>
+                <a class="btn btn-primary btn-large" href="/group-match-bets/new">Add New Bet</a>
+                <p>*Admin only</p>
+            </p>
+        </div>
+    </header>
+    <div class="row" style="display: flex, flex-wrap: wrap">
+        <% groupMatchBets.forEach(function(groupMatchBet){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <h4><%= groupMatchBet.homeTeamName %> vs <%= groupMatchBet.awayTeamName %></h4>
+                    <img src="<%= groupMatchBet.imageURL %>">
+                    <h4><%= groupMatchBet.stadium %></h4>
+                    <h4><%= groupMatchBet.betStatus %></h4>
+                    <p><a href="/group-match-bets/<%=groupMatchBet._id%>" class="btn btn-primary">More Info</a></p>
+                </div>
+            </div>
+        <% });%>
+    </div>
+</div>
 
 <% include ../partials/footer %>
