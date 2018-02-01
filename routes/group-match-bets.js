@@ -35,13 +35,13 @@ router.post("/", function(req, res){
    var stadium = req.body.stadium;
 
    //Create a new object with the variables taken from the form.
-   var newBet = {
-   	homeTeamName: homeTeamName, 
-   	awayTeamName: awayTeamName, 
-   	imageURL: imageURL,
-   	betStatus: betStatus,
-    stadium: stadium
-   };
+	var newBet = {
+		homeTeamName: homeTeamName, 
+		awayTeamName: awayTeamName, 
+		imageURL: imageURL,
+		betStatus: betStatus,
+		stadium: stadium
+	};
    //Create new bet and save to DB
    GroupMatchBet.create(newBet, function(err, newlyCreated){
     if(err){
@@ -56,7 +56,17 @@ router.post("/", function(req, res){
 });
 
 //SHOW ROUTE
-
+router.get("/:GroupMatchBetId", function(req, res){
+	GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
+		if (err) {
+			console.log(err);
+			req.flash("error", "Bet Not Found");
+			res.redirect("/group-match-bets");
+		} else {
+			res.render("groupMatchBets/show.ejs", {groupMatchBet: foundBet});
+		}
+	});
+});
 
 //EDIT ROUTE
 

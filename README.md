@@ -153,3 +153,6 @@
 * Add index and new routes
 * Add index and new pages
 * Add create route
+
+# 30. Group Match Bets Pt. 2
+* Add show page and show route
