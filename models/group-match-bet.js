@@ -14,7 +14,13 @@ var groupMatchBetSchema = new mongoose.Schema({
 	},
 	kickOffDate: { 
 		type: Date 
-	}
+	},
+	betProposals: [
+  	{
+  		type: mongoose.Schema.Types.ObjectId,
+  		ref: "GroupMatchBetProposal"
+  	}
+  ],
 });
 
 module.exports = mongoose.model("GroupMatchBet", groupMatchBetSchema);

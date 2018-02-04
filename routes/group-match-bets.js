@@ -1,9 +1,9 @@
 //REQUIRED MODULES
-var express 		= require("express");
-var router 			= express.Router();
-var GroupMatchBet 	= require("../models/group-match-bet");
-var middleware 		= require("../middleware");
-moment          	= require("moment");
+var express 		     = require("express");
+var router 			     = express.Router();
+var GroupMatchBet 	 = require("../models/group-match-bet");
+var middleware 		   = require("../middleware");
+moment          	   = require("moment");
 //============================================================================//
 //INDEX ROUTE
 router.get("/", function(req, res){

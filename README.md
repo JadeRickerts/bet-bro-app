@@ -172,3 +172,9 @@
 * Add autherisation to edit routes
 * Amend user model
 * Add middleware for admin only access
+
+# 33. Add Bet Proposal to Group Match Bet
+* Amend app.js with new routes
+* Create a bet proposal from bet
+* Add create and new routes
+* Add new page
