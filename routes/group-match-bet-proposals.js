@@ -23,4 +23,47 @@ router.get("/new", function(req, res){
 	});
 });
 
+//CREATE ROUTE
+router.post("/", function(req, res){
+  //Lookup bet using ID
+  GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
+    if(err){
+      console.log(err);
+      req.flash("error", "Something went wrong.");
+      res.redirect("/group-match-bets");
+    }
+    else{
+      //Create a new comment
+      var betAmount = req.body.betAmount,
+      betPick = req.body.betPick,
+      numberOfBetters = req.body.numberOfBetters,
+      betProposal = {
+      	betPick: betPick,
+      	numberOfBetters: numberOfBetters,
+      	betAmount: betAmount
+      };
+
+      GroupMatchBetProposal.create(betProposal, function(err, createdBetProposal){
+        if(err){
+          req.flash("error", "Something went wrong.");
+          console.log(err);
+        }
+        else {
+          //Add username and ID to comment
+          createdBetProposal.author.id = req.user._id;
+          createdBetProposal.author.username = req.user.username;
+          //Save Comment
+          createdBetProposal.save();
+          //Connect new comment to campground
+          foundBet.betProposals.push(createdBetProposal);
+          foundBet.save();
+          //Redirect to bet show page
+          req.flash("success", "Bet Proposal created.");
+          res.redirect("/group-match-bets/" + foundBet._id);
+        }
+      })
+    }
+  })
+});
+
 module.exports = router;

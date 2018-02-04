@@ -10,7 +10,7 @@
           </h1>
           <!--The Form-->
           <div style="width: 30%; margin: 25px auto">
-               <form action="/group-match-bets/<%= bet._id %>/group-match-bet-proposals" method="POST">
+               <form action="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/" method="POST">
                     <div class="form-group">
                          <input class="form-control" type="number" name="betAmount" placeholder="Bet Amount">
                     </div>
@@ -23,8 +23,8 @@
                     </div>
                     <div class="form-group">
                       <select class="form-control" name="numberOfBetters">
-                        <option value="two">2 Betters</option>
-                        <option value="three">3 Betters</option>
+                        <option value="2">2 Betters</option>
+                        <option value="3">3 Betters</option>
                       </select>
                     </div>
                     <div class="form-group">
