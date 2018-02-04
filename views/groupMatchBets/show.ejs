@@ -18,7 +18,7 @@
 					<h4 class="pull-right"><%= groupMatchBet.betStatus %></h4>
 					<p><%= groupMatchBet.stadium %></p>
 					<a href="/group-match-bets/<%= groupMatchBet.id %>/edit" class="btn btn-warning">Edit</a>
-					<form id="delete-form" action="#" method="POST">
+					<form id="delete-form" action="/group-match-bets/<%= groupMatchBet._id %>?_method=DELETE" method="POST">
 						<button class="btn btn-danger">Delete</button>
 					</form>
 				</div>

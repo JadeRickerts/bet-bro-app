@@ -117,5 +117,16 @@ router.put("/:GroupMatchBetId", function(req, res){
 });
 
 //DESTORY ROUTE
+router.delete("/:GroupMatchBetId", function(req, res){
+  GroupMatchBet.findByIdAndRemove(req.params.GroupMatchBetId, function(err){
+    if(err){
+      req.flash("error", "Something went wrong.");
+      res.redirect("/group-match-bets");
+    } else {
+      req.flash("success", "Bet deleted.");
+      res.redirect("/group-match-bets");
+    }
+  });
+});
 
 module.exports = router;

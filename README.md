@@ -165,3 +165,5 @@
 # 31. Group Match Bets Pt. 3 
 * Add edit and update routes
 * Add edit page
+* Add destroy route
+* Amend show page with edit and delete links
