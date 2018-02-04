@@ -156,5 +156,12 @@
 
 # 30. Group Match Bets Pt. 2
 * Add show page and show route
+* Amend new route and new page 
+* Add jQuery
+* Add momemt.js
 * Amend model to add additional information
 * Add the dates and make sure it works
+
+# 31. Group Match Bets Pt. 3 
+* Add edit and update routes
+* Add edit page

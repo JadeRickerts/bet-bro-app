@@ -75,10 +75,46 @@ router.get("/:GroupMatchBetId", function(req, res){
 });
 
 //EDIT ROUTE
-
+router.get("/:GroupMatchBetId/edit", function(req, res){
+  GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
+    res.render("groupMatchBets/edit.ejs", {groupMatchBet: foundBet});
+  });
+});
 
 //UPDATE ROUTE
+router.put("/:GroupMatchBetId", function(req, res){
+  //get data from form and add to the bets array
+   var homeTeamName = req.body.homeTeamName;
+   var awayTeamName = req.body.awayTeamName;
+   var imageURL = "https://screenshotlayer.com/images/assets/placeholder.png";
+   var betStatus = req.body.betStatus;
+   var stadium = req.body.stadium;
+   var kickOffDate = moment(req.body.kickOffDate, "YYYY-MM-DDTHH:mm:ssZ").toDate();
+   var betModifiedDate = Date.now();
 
+   //Create a new object with the variables taken from the form.
+	var editedBet = {
+		homeTeamName: homeTeamName, 
+		awayTeamName: awayTeamName, 
+		imageURL: imageURL,
+		betStatus: betStatus,
+		stadium: stadium,
+		kickOffDate: kickOffDate,
+		betModifiedDate: betModifiedDate,
+	};
+
+  //Find and update the correct bet
+  GroupMatchBet.findByIdAndUpdate(req.params.GroupMatchBetId, editedBet, function(err, updatedBet){
+    if(err){
+      req.flash("error", "Something went wrong.");
+      res.redirect("/group-match-bets");
+    } else {
+      //redirect to show page
+      req.flash("success", "Bet updated.");
+      res.redirect("/group-match-bets/" + req.params.GroupMatchBetId);
+    }
+  })
+});
 
 //DESTORY ROUTE
 
