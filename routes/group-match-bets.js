@@ -21,12 +21,12 @@ router.get("/", function(req, res){
 });
 
 //NEW ROUTE
-router.get("/new", function(req, res){
+router.get("/new", middleware.isAdministrator, function(req, res){
 	res.render("groupMatchBets/new.ejs");
 });
 
 //CREATE ROUTE
-router.post("/", function(req, res){
+router.post("/", middleware.isAdministrator, function(req, res){
    //get data from form and add to the bets array
    var homeTeamName = req.body.homeTeamName;
    var awayTeamName = req.body.awayTeamName;
@@ -75,14 +75,14 @@ router.get("/:GroupMatchBetId", function(req, res){
 });
 
 //EDIT ROUTE
-router.get("/:GroupMatchBetId/edit", function(req, res){
+router.get("/:GroupMatchBetId/edit", middleware.isAdministrator, function(req, res){
   GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
     res.render("groupMatchBets/edit.ejs", {groupMatchBet: foundBet});
   });
 });
 
 //UPDATE ROUTE
-router.put("/:GroupMatchBetId", function(req, res){
+router.put("/:GroupMatchBetId", middleware.isAdministrator, function(req, res){
   //get data from form and add to the bets array
    var homeTeamName = req.body.homeTeamName;
    var awayTeamName = req.body.awayTeamName;
@@ -117,7 +117,7 @@ router.put("/:GroupMatchBetId", function(req, res){
 });
 
 //DESTORY ROUTE
-router.delete("/:GroupMatchBetId", function(req, res){
+router.delete("/:GroupMatchBetId", middleware.isAdministrator, function(req, res){
   GroupMatchBet.findByIdAndRemove(req.params.GroupMatchBetId, function(err){
     if(err){
       req.flash("error", "Something went wrong.");

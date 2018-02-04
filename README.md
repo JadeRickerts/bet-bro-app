@@ -167,3 +167,8 @@
 * Add edit page
 * Add destroy route
 * Amend show page with edit and delete links
+
+# 32. Group Match Bets Pt. 4
+* Add autherisation to edit routes
+* Amend user model
+* Add middleware for admin only access
