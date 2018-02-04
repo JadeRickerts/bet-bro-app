@@ -156,3 +156,5 @@
 
 # 30. Group Match Bets Pt. 2
 * Add show page and show route
+* Amend model to add additional information
+* Add the dates and make sure it works

@@ -5,7 +5,16 @@ var groupMatchBetSchema = new mongoose.Schema({
 	awayTeamName: String,
 	imageURL: String,
 	stadium: String,
-	betStatus: String
+	betStatus: String,
+	betCreatedDate: { 
+		type: Date
+	},
+	betModifiedDate: { 
+		type: Date
+	},
+	kickOffDate: { 
+		type: Date 
+	}
 });
 
 module.exports = mongoose.model("GroupMatchBet", groupMatchBetSchema);

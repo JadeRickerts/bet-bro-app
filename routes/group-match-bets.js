@@ -1,8 +1,9 @@
 //REQUIRED MODULES
-var express = require("express");
-var router = express.Router();
-var GroupMatchBet = require("../models/group-match-bet");
-var middleware = require("../middleware");
+var express 		= require("express");
+var router 			= express.Router();
+var GroupMatchBet 	= require("../models/group-match-bet");
+var middleware 		= require("../middleware");
+moment          	= require("moment");
 //============================================================================//
 //INDEX ROUTE
 router.get("/", function(req, res){
@@ -14,7 +15,6 @@ router.get("/", function(req, res){
       console.log(err);
     }
     else {
-    	console.log(allGroupMatchBets);
     	res.render("groupMatchBets/index.ejs", {groupMatchBets: allGroupMatchBets});
     }
   });
@@ -33,6 +33,9 @@ router.post("/", function(req, res){
    var imageURL = "https://screenshotlayer.com/images/assets/placeholder.png";
    var betStatus = req.body.betStatus;
    var stadium = req.body.stadium;
+   var kickOffDate = moment(req.body.kickOffDate, "YYYY-MM-DDTHH:mm:ssZ").toDate();
+   var betModifiedDate = Date.now();
+   var betCreatedDate = Date.now();
 
    //Create a new object with the variables taken from the form.
 	var newBet = {
@@ -40,7 +43,10 @@ router.post("/", function(req, res){
 		awayTeamName: awayTeamName, 
 		imageURL: imageURL,
 		betStatus: betStatus,
-		stadium: stadium
+		stadium: stadium,
+		kickOffDate: kickOffDate,
+		betModifiedDate: betModifiedDate,
+		betCreatedDate: betCreatedDate
 	};
    //Create new bet and save to DB
    GroupMatchBet.create(newBet, function(err, newlyCreated){

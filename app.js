@@ -7,13 +7,13 @@ flash           = require("connect-flash"),
 passport        = require("passport"),
 LocalStrategy   = require("passport-local"),
 methodOverride  = require("method-override"),
+moment          = require("moment"),
 Bet 		        = require("./models/bet.js"),
 Comment         = require("./models/comment.js"),
 User            = require("./models/user.js"),
 GroupMatchBet   = require("./models/group-match-bet.js"),
 path 		        = require('path'),
 seedDB		      = require("./seeds.js");
-
 
 //REQUIRED ROUTES
 var commentRoutes = require("./routes/comments"),
