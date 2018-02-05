@@ -173,8 +173,15 @@
 * Amend user model
 * Add middleware for admin only access
 
-# 33. Add Bet Proposal to Group Match Bet
+# 33. Add Bet Proposal to Group Match Bet Pt. 1
 * Amend app.js with new routes
 * Create a bet proposal from bet
 * Add create and new routes
 * Add new page
+* Fix Group Match Bet Proposal index page by adding group match bet proposals
+
+# 34. Add Bet Proposal to Group Match Bet Pt. 2
+* Add show page for group match bet proposal
+* Edit group match bet proposal
+* Delete group match bet proposal
+* Add authorization for edit and delete routes

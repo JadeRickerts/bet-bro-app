@@ -66,4 +66,29 @@ router.post("/", function(req, res){
   })
 });
 
+//SHOW ROUTE
+router.get("/:GroupMatchBetProposalId", function(req, res){
+  //Find Bet Proposal by ID
+  GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
+    if (err) {
+      console.log(err);
+      req.flash("error", "Bet Not Found");
+      res.redirect("back");
+    } else {
+      GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
+        if (err) {
+          console.log(err);
+          req.flash("error", "Bet Proposal Not Found");
+          res.redirect("back");
+        } else {
+          res.render("groupMatchBetProposals/show.ejs", {
+            bet: foundBet,
+            betProposal: foundBetProposal
+          });
+        }
+      });
+    }
+  });
+});
+
 module.exports = router;
