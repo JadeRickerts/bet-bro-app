@@ -40,7 +40,7 @@ router.get("/login", function(req, res){
 
 //Handle login logic
 router.post("/login", passport.authenticate("local", {
-  successRedirect: "/bets",
+  successRedirect: "/group-match-bets",
   failureRedirect: "/login"
   }), function(req, res){
 });

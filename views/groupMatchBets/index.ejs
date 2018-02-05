@@ -28,6 +28,26 @@
             </div>
         <% });%>
     </div>
+    <div class="row" style="display: flex, flex-wrap: wrap">
+        <% groupMatchBets.forEach(function(groupMatchBet){ %>
+            <% groupMatchBet.betProposals.forEach(function(groupMatchBetProposal){ %>
+                <div class="col-md-3 col-sm-6">
+                    <div class="thumbnail">
+                        <h4><%= groupMatchBet.homeTeamName %> vs <%= groupMatchBet.awayTeamName %></h4>
+                        <img src="<%= groupMatchBet.imageURL %>">
+                        <h4><%= groupMatchBet.stadium %></h4>
+                        <h4><%= groupMatchBet.betStatus %></h4>
+                        <h4><%= groupMatchBetProposal.amount %></h4>
+                        <p>
+                            <a href="/group-match-bets/<%=groupMatchBet._id%>/group-match-bet-proposals/<%=groupMatchBetProposal._id%>" 
+                                class="btn btn-primary">More Info
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            <% });%>
+        <% });%>
+    </div>
 </div>
 
 <% include ../partials/footer %>

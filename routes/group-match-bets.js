@@ -9,7 +9,7 @@ moment          	   = require("moment");
 router.get("/", function(req, res){
   //Connect to mongoose db data
   //Get all bets from DB
-  GroupMatchBet.find({}, function (err, allGroupMatchBets) {
+  GroupMatchBet.find({}).populate("betProposals").exec(function (err, allGroupMatchBets) {
     if (err) {
       req.flash("error", "Bets not found.");
       console.log(err);

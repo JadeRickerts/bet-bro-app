@@ -40,7 +40,7 @@ router.post("/", function(req, res){
       betProposal = {
       	betPick: betPick,
       	numberOfBetters: numberOfBetters,
-      	betAmount: betAmount
+      	amount: betAmount
       };
 
       GroupMatchBetProposal.create(betProposal, function(err, createdBetProposal){
@@ -55,7 +55,7 @@ router.post("/", function(req, res){
           //Save Comment
           createdBetProposal.save();
           //Connect new comment to campground
-          foundBet.betProposals.push(createdBetProposal);
+          foundBet.betProposals.push(createdBetProposal._id);
           foundBet.save();
           //Redirect to bet show page
           req.flash("success", "Bet Proposal created.");
