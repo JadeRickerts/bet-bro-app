@@ -147,7 +147,18 @@ router.put("/:GroupMatchBetProposalId", function(req, res){
   })
 });
 
-//DELETE ROUTE
-
+//DESTROY ROUTE
+router.delete("/:GroupMatchBetProposalId", function(req, res){
+  GroupMatchBetProposal.findByIdAndRemove(req.params.GroupMatchBetProposalId, function(err){
+    if(err) {
+      console.log(err);
+      req.flash("error", "Could Not Delete Bet Proposal");
+      res.redirect("back");
+    } else {
+      req.flash("success", "Deleted Bet Proposal");
+      res.redirect("/group-match-bets");
+    }
+  })
+})
 
 module.exports = router;
