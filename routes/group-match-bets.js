@@ -106,11 +106,11 @@ router.put("/:GroupMatchBetId", middleware.isAdministrator, function(req, res){
   //Find and update the correct bet
   GroupMatchBet.findByIdAndUpdate(req.params.GroupMatchBetId, editedBet, function(err, updatedBet){
     if(err){
-      req.flash("error", "Something went wrong.");
+      req.flash("error", "Bet Not Found.");
       res.redirect("/group-match-bets");
     } else {
       //redirect to show page
-      req.flash("success", "Bet updated.");
+      req.flash("success", "Bet Updated.");
       res.redirect("/group-match-bets/" + req.params.GroupMatchBetId);
     }
   })

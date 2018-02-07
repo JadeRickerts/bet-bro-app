@@ -91,4 +91,63 @@ router.get("/:GroupMatchBetProposalId", function(req, res){
   });
 });
 
+//EDIT ROUTE
+router.get("/:GroupMatchBetProposalId/edit", function(req, res){
+  GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
+    if (err) {
+      console.log(err);
+      req.flash("error", "Bet Not Found");
+      res.redirect("back");
+    } else {
+      GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
+        if (err) {
+          console.log(err);
+          req.flash("error", "Bet Proposal Not Found");
+          res.redirect("back");
+        } else {
+          res.render("GroupMatchBetProposals/edit.ejs", {
+            bet: foundBet,
+            betProposal: foundBetProposal
+          });
+        }
+      });
+    }
+  });
+});
+
+
+//UPDATE ROUTE
+router.put("/:GroupMatchBetProposalId", function(req, res){
+  //Create a new comment
+  var betAmount = req.body.betAmount,
+  betPick = req.body.betPick,
+  numberOfBetters = req.body.numberOfBetters,
+  betProposal = {
+    betPick: betPick,
+    numberOfBetters: numberOfBetters,
+    amount: betAmount
+  };
+  GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
+    if (err) {
+      console.log(err);
+      req.flash("error", "Bet Not Found");
+      res.redirect("back");
+    } else {
+      GroupMatchBetProposal.findByIdAndUpdate(req.params.GroupMatchBetProposalId, betProposal, function(err, foundBetProposal){
+        if (err) {
+          console.log(err);
+          req.flash("error", "Bet Proposal Not Found");
+          res.redirect("back");
+        } else {
+          req.flash("success", "Bet Proposal Updated");
+          res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" + req.params.GroupMatchBetProposalId);
+        }
+      })
+    }
+  })
+});
+
+//DELETE ROUTE
+
+
 module.exports = router;

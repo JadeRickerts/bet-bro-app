@@ -16,10 +16,14 @@
 				<img class="img-responsive" src="<%= bet.imageURL %>">
 				<div class="caption-full">
 					<h4 class="pull-right"><%= bet.betStatus %></h4>
-					<p><%= bet.stadium %></p>
-					<p><%= betProposal.amount %></p>
-					<p><%= betProposal.numberOfBetters %></p>
-					<a href="/group-match-bets/<%= bet.id %>/edit" class="btn btn-warning">Edit</a>
+					<p><strong>Stadium: </strong><%= bet.stadium %></p>
+					<p><strong>Bet Proposal Amount: </strong><%= betProposal.amount %></p>
+					<p><strong>Number of Betters Allowed: </strong><%= betProposal.numberOfBetters %></p>
+					<p><strong>Bro's Pick: </strong><%= betProposal.betPick %></p>
+					<a 	
+						href="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/edit" 
+						class="btn btn-warning">Edit
+					</a>
 					<form id="delete-form" action="/group-match-bets/<%= bet._id %>?_method=DELETE" method="POST">
 						<button class="btn btn-danger">Delete</button>
 					</form>
