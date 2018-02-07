@@ -6,7 +6,7 @@ var GroupMatchBetProposal = require("../models/group-match-bet-proposal");
 var middleware = require("../middleware");
 
 //NEW ROUTE
-router.get("/new", function(req, res){
+router.get("/new", middleware.isLoggedIn, function(req, res){
 	//Find bet by ID
 	GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
 		if(err){
@@ -24,7 +24,7 @@ router.get("/new", function(req, res){
 });
 
 //CREATE ROUTE
-router.post("/", function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
   //Lookup bet using ID
   GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
     if(err){
@@ -92,7 +92,7 @@ router.get("/:GroupMatchBetProposalId", function(req, res){
 });
 
 //EDIT ROUTE
-router.get("/:GroupMatchBetProposalId/edit", function(req, res){
+router.get("/:GroupMatchBetProposalId/edit", middleware.checkBetProposalOwnership, function(req, res){
   GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
     if (err) {
       console.log(err);
@@ -117,7 +117,7 @@ router.get("/:GroupMatchBetProposalId/edit", function(req, res){
 
 
 //UPDATE ROUTE
-router.put("/:GroupMatchBetProposalId", function(req, res){
+router.put("/:GroupMatchBetProposalId", middleware.checkBetProposalOwnership, function(req, res){
   //Create a new comment
   var betAmount = req.body.betAmount,
   betPick = req.body.betPick,
@@ -148,7 +148,7 @@ router.put("/:GroupMatchBetProposalId", function(req, res){
 });
 
 //DESTROY ROUTE
-router.delete("/:GroupMatchBetProposalId", function(req, res){
+router.delete("/:GroupMatchBetProposalId", middleware.checkBetProposalOwnership, function(req, res){
   GroupMatchBetProposal.findByIdAndRemove(req.params.GroupMatchBetProposalId, function(err){
     if(err) {
       console.log(err);

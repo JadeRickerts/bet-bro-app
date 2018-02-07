@@ -184,4 +184,4 @@
 * Add show page for group match bet proposal
 * Edit group match bet proposal
 * Delete group match bet proposal
-* Add authorization for edit and delete routes
+* Add authorization for new, edit and delete routes
