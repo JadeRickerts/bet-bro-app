@@ -19,7 +19,15 @@
 					<p><strong>Stadium: </strong><%= bet.stadium %></p>
 					<p><strong>Bet Proposal Amount: </strong><%= betProposal.amount %></p>
 					<p><strong>Number of Betters Allowed: </strong><%= betProposal.numberOfBetters %></p>
-					<p><strong>Bro's Pick: </strong><%= betProposal.betPick %></p>
+					<p><strong>Bro's Pick: </strong>
+						<% if(betProposal.betPick == "homeWin") { %>
+							<%= bet.homeTeamName %> Win
+						<% } else if (betProposal.betPick == "awayWin") { %>
+							<%= bet.awayTeamName %> Win
+						<% } else { %>  
+							Draw
+						<% } %>
+					</p>
 					<% if(currentUser && betProposal.author.id.equals(currentUser._id)) {%>
 						<a 	
 							href="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/edit"
@@ -30,15 +38,37 @@
 							<button class="btn btn-danger" type="submit" formaction="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>?_method=DELETE">Delete</button>
 						</form>
 					<% } %>
-					<form id="delete-form" action="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/betpicks/" method="POST">
-						<select id="delete-form" class="form-control" name="betPick">
+
+				</div>
+			</div>
+			<div class="well">
+				<h3>Accepted Bet Picks</h3>
+				<% if(currentUser && !betProposal.author.id.equals(currentUser._id)) {%>
+					<form action="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/betpicks/" method="POST">
+						<select class="form-control" name="betPick">
 	                        <option value="homeWin"><%= bet.homeTeamName %> Win</option>
 	                        <option value="draw">Draw</option>
 	                        <option value="awayWin"><%= bet.awayTeamName %> Win</option>
 	                    </select>
 	                    <button class="btn btn-success" type="submit" formaction="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/betpicks/">Accept Bet</button>
 					</form>
-				</div>
+				<% } %>
+				<% betProposal.acceptedBetPicks.forEach(function(betPick){ %>
+					<div class="row">
+						<div class="col-md-12">
+							<p><strong><%= betPick.author.username %></strong></p>
+							<p>
+								<% if(betPick.betPick == "homeWin") { %>
+									<%= bet.homeTeamName %> Win
+								<% } else if (betPick.betPick == "awayWin") { %>
+									<%= bet.awayTeamName %> Win
+								<% } else { %>  
+									Draw
+								<% } %>
+							</p>
+						</div>
+					</div>
+				<% }); %>
 			</div>
 		</div>
 	</div>
