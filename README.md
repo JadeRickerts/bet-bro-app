@@ -171,7 +171,7 @@
 # 32. Group Match Bets Pt. 4
 * Add autherisation to edit routes
 * Amend user model
-* Add middleware for admin only access
+* Add middleware for admin only access 
 
 # 33. Add Bet Proposal to Group Match Bet Pt. 1
 * Amend app.js with new routes
@@ -185,3 +185,7 @@
 * Edit group match bet proposal
 * Delete group match bet proposal
 * Add authorization for new, edit and delete routes
+
+# 35. Add Bet Acceptance to Group Match Proposals
+* Add bet acceptance new route and view
+* 

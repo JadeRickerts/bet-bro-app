@@ -16,11 +16,12 @@ path 		    = require('path'),
 seedDB		    = require("./seeds.js");
 
 //REQUIRED ROUTES
-var commentRoutes 			 = require("./routes/comments"),
-betRoutes         			 = require("./routes/bets"),
-groupMatchBetRoutes 		 = require("./routes/group-match-bets"),
-groupMatchBetProposalsRoutes = require("./routes/group-match-bet-proposals"),
-indexRoutes       			 = require("./routes/index");
+var commentRoutes 			 		  = require("./routes/comments"),
+betRoutes         			 		  = require("./routes/bets"),
+groupMatchBetRoutes 		 		  = require("./routes/group-match-bets"),
+groupMatchBetProposalsRoutes 		  = require("./routes/group-match-bet-proposals"),
+groupMatchBetProposalAcceptanceRoutes = require("./routes/group-match-bet-proposal-acceptence"),
+indexRoutes       			 		  = require("./routes/index");
 
 //PASSPORT CONFIG
 app.use(require("express-session")({
@@ -68,6 +69,7 @@ app.use("/bets", betRoutes);
 app.use("/bets/:id/comments", commentRoutes);
 app.use("/group-match-bets", groupMatchBetRoutes);
 app.use("/group-match-bets/:GroupMatchBetId/group-match-bet-proposals", groupMatchBetProposalsRoutes);
+app.use("/group-match-bets/:GroupMatchBetId/group-match-bet-proposals/:GroupMatchBetProposalId/betpicks/", groupMatchBetProposalAcceptanceRoutes);
 
 //SERVER CONFIG
 app.listen(3000, function(){

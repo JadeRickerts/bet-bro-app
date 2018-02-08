@@ -10,7 +10,21 @@ var groupMatchBetProposalSchema = mongoose.Schema({
 		username: String
 	},
 	amount: Number,
-	numberOfBetters: Number
+	numberOfBetters: Number,
+	acceptedBetPicks: [
+		{
+			author: {
+				id: {
+					type: mongoose.Schema.Types.ObjectId,
+					ref: "User"
+				},
+				username: String
+			},
+			betPick: String,
+			betPickResult: String
+		}
+	],
+	betPickResult: String
 });
 
 module.exports = mongoose.model("GroupMatchBetProposal", groupMatchBetProposalSchema);

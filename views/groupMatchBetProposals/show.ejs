@@ -20,13 +20,23 @@
 					<p><strong>Bet Proposal Amount: </strong><%= betProposal.amount %></p>
 					<p><strong>Number of Betters Allowed: </strong><%= betProposal.numberOfBetters %></p>
 					<p><strong>Bro's Pick: </strong><%= betProposal.betPick %></p>
-					<a 	
-						href="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/edit" 
-						class="btn btn-warning">Edit
-					</a>
-					<form id="delete-form" 
-					action="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>?_method=DELETE" method="POST">
-						<button class="btn btn-danger">Delete</button>
+					<% if(currentUser && betProposal.author.id.equals(currentUser._id)) {%>
+						<a 	
+							href="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/edit"
+							class="btn btn-warning">Edit
+						</a>
+						<form id="delete-form" 
+						action="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>?_method=DELETE" method="POST">
+							<button class="btn btn-danger" type="submit" formaction="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>?_method=DELETE">Delete</button>
+						</form>
+					<% } %>
+					<form id="delete-form" action="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/betpicks/" method="POST">
+						<select id="delete-form" class="form-control" name="betPick">
+	                        <option value="homeWin"><%= bet.homeTeamName %> Win</option>
+	                        <option value="draw">Draw</option>
+	                        <option value="awayWin"><%= bet.awayTeamName %> Win</option>
+	                    </select>
+	                    <button class="btn btn-success" type="submit" formaction="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/betpicks/">Accept Bet</button>
 					</form>
 				</div>
 			</div>
