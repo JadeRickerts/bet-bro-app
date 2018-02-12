@@ -72,8 +72,7 @@
 					<% count = count + 1;%>
 					<div class="row">
 						<div class="col-md-12">
-							<p><strong><%= betPick.author.username %></strong></p>
-							<p>
+							<p><strong><%= betPick.author.username %></strong> - 
 								<% if(betPick.betPick == "homeWin") { %>
 									<%= bet.homeTeamName %> Win
 								<% } else if (betPick.betPick == "awayWin") { %>
@@ -82,6 +81,7 @@
 									Draw
 								<% } %>
 							</p>
+							<% if(currentUser && !betProposal.author.id.equals(currentUser._id)) {%>
 							<form 
 								action=	"/group-match-bets/<%= bet._id %>/
 										group-match-bet-proposals/<%= betProposal._id %>/
@@ -117,6 +117,7 @@
 									Delete
 								</button>
 							</form>
+							<% } %>
 						</div>
 				<% }); %>
 			</div>

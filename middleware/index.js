@@ -49,6 +49,28 @@ middlewareObj.checkBetProposalOwnership = function(req, res, next) {
 	}
 }
 
+middlewareObj.checkBetProposalBetPickOwnership = function(req, res, next) {
+	if(req.isAuthenticated()) {
+		GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
+			if (err) {
+				req.flash("error", "Bet Proposal Not Found");
+				res.redirect("back");
+			} else {
+				foundBetProposal.acceptedBetPicks[req.body.count-1].author.id.equals(req.user._id);
+				if (foundBetProposal.acceptedBetPicks[req.body.count-1].author.id.equals(req.user._id)) {
+					next();
+				} else {
+					req.flash("error", "You don't have permission to do that");
+					res.redirect("back");
+				}
+			}
+		})
+	} else {
+		req.flash("error", "You Need To Be Logged In To Do That");
+		res.redirect("back");
+	}
+}
+
 middlewareObj.checkCommentOwnership = function(req, res, next) {
 	//is user logged in at all
 	if(req.isAuthenticated()) {

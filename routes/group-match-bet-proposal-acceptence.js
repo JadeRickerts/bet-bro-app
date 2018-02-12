@@ -6,7 +6,7 @@ var GroupMatchBetProposal = require("../models/group-match-bet-proposal");
 var middleware = require("../middleware");
 
 //CREATE ROUTE
-router.post("/", function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
   //Lookup bet using ID
   GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
     if(err){
@@ -34,7 +34,8 @@ router.post("/", function(req, res){
   })
 });
 
-router.put("/:betPickId", function(req, res){
+//UPDATE ROUTE
+router.put("/:betPickId", middleware.checkBetProposalBetPickOwnership, function(req, res){
   //Lookup bet using ID
   GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
     if(err){
@@ -58,7 +59,9 @@ router.put("/:betPickId", function(req, res){
   });
 });
 
-router.delete("/:betPickId", function(req, res){
+
+//DESTROY ROUTE
+router.delete("/:betPickId", middleware.checkBetProposalBetPickOwnership, function(req, res){
   //Lookup bet using ID
   GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
     if(err){
