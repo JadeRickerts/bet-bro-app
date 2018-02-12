@@ -58,4 +58,28 @@ router.put("/:betPickId", function(req, res){
   });
 });
 
+router.delete("/:betPickId", function(req, res){
+  //Lookup bet using ID
+  GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
+    if(err){
+      console.log(err);
+      req.flash("error", "Bet Proposal Not Found");
+      res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
+        + req.params.GroupMatchBetProposalId);
+    } else {
+      foundBetProposal.acceptedBetPicks[req.body.count-1].remove();
+      foundBetProposal.save(function(err){
+        if (err) {
+          console.log(err);
+          req.flash("error", "Could Not Edit Bet Proposal Bet Pick");
+          req.redirect("back");
+        }
+      req.flash("success", "Bet Proposal Bet Pick Successfully Deleted");
+      res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
+        + req.params.GroupMatchBetProposalId);
+      });
+    }
+  });
+});
+
 module.exports = router;

@@ -102,7 +102,22 @@
 									Edit
 								</button>
 							</form>
-					</div>
+							<form 
+								action=	"/group-match-bets/<%= bet._id %>/
+										group-match-bet-proposals/<%= betProposal._id %>/
+										betpicks/<%= betPick._id %>?_method=DELETE"
+								method=	"POST">
+								<input type="text" value="<%= count %>" name="count" hidden="true">
+								<button 
+									class="btn btn-danger btn-xs" 
+									type="submit" 
+									formaction="/group-match-bets/<%= bet._id %>/
+									group-match-bet-proposals/<%= betProposal._id %>
+									/betpicks/<%= betPick._id %>?_method=DELETE">
+									Delete
+								</button>
+							</form>
+						</div>
 				<% }); %>
 			</div>
 		</div>
