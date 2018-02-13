@@ -151,12 +151,20 @@
 					</p>
 					<% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
 						<a 
-							href="/bets/<%= bet._id %>/comments/<%= comment._id %>/edit"
+							href="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/comments/<%= comment._id %>/edit"
 							class="btn btn-xs btn-warning">
 							Edit
 						</a>
-						<form id="delete-form" action="/bets/<%= bet._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-							<button class="btn btn-xs btn-danger">Delete</button>
+						<form 
+							id="delete-form" 
+							action="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/comments/<%= comment._id %>?_method=DELETE" 
+							method="POST">
+							<button 
+								class="btn btn-xs btn-danger"
+								type="submit"
+								formaction="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/comments/<%= comment._id %>?_method=DELETE">
+								Delete
+							</button>
 						</form>
 					<% } %>
 				<% }) %>

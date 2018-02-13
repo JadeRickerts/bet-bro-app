@@ -6,7 +6,7 @@
           <h1 style="text-align: center;">Edit a Comment</h1>
           <!--The Form-->
           <div style="width: 30%; margin: 25px auto">
-               <form action="/bets/<%= bet_id %>/comments/<%= comment._id %>/?_method=PUT" method="POST">
+               <form action="/group-match-bets/<%= bet_id %>/group-match-bet-proposals/<%= betProposal_id %>/comments/<%= comment._id %>/?_method=PUT" method="POST">
                     <div class="form-group">
                          <input class="form-control" type="text" name="comment[text]" value="<%= comment.text %>">
                     </div>
@@ -15,7 +15,7 @@
                     </div>
                </form>
                <!-- Link to go back -->
-               <a href="/bets">Go Back</a>
+               <a href="/group-match-bets/<%= bet_id %>/group-match-bet-proposals/<%= betProposal_id %>">Go Back</a>
           </div>   
      </div>
 </div>

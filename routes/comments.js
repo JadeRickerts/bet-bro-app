@@ -75,7 +75,11 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(req, 
       req.flash("error", "Something went wrong.");
       res.redirect("back");
     } else {
-      res.render("comments/edit.ejs", {bet_id: req.params.id, comment: foundComment});
+      res.render("comments/edit.ejs", {
+        bet_id: req.params.GroupMatchBetId,
+        betProposal_id: req.params.GroupMatchBetProposalId, 
+        comment: foundComment
+      });
     }
   });
 });
@@ -88,7 +92,7 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(req, res){
       res.redirect("back");
     } else {
       req.flash("success", "Comment updated.");
-      res.redirect("/bets/" + req.params.id);
+      res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" + req.params.GroupMatchBetProposalId);
     }
   });
 });
@@ -101,7 +105,7 @@ router.delete("/:comment_id", middleware.checkCommentOwnership, function(req, re
       res.redirect("back");
     } else {
       req.flash("success", "Comment deleted.");
-      res.redirect("/bets/" + req.params.id);
+      res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" + req.params.GroupMatchBetProposalId);
     }
   });
 });
