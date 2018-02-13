@@ -8,12 +8,12 @@ passport        = require("passport"),
 LocalStrategy   = require("passport-local"),
 methodOverride  = require("method-override"),
 moment          = require("moment"),
-Bet 		    = require("./models/bet.js"),
+Bet 		        = require("./models/bet.js"),
 Comment         = require("./models/comment.js"),
 User            = require("./models/user.js"),
 GroupMatchBet   = require("./models/group-match-bet.js"),
-path 		    = require('path'),
-seedDB		    = require("./seeds.js");
+path 		        = require('path'),
+seedDB		      = require("./seeds.js");
 
 //REQUIRED ROUTES
 var commentRoutes 			 		  = require("./routes/comments"),
@@ -66,7 +66,7 @@ app.use(methodOverride("_method"));
 //ROUTES
 app.use(indexRoutes);
 app.use("/bets", betRoutes);
-app.use("/bets/:id/comments", commentRoutes);
+app.use("/group-match-bets/:GroupMatchBetId/group-match-bet-proposals/:GroupMatchBetProposalId/comments", commentRoutes);
 app.use("/group-match-bets", groupMatchBetRoutes);
 app.use("/group-match-bets/:GroupMatchBetId/group-match-bet-proposals", groupMatchBetProposalsRoutes);
 app.use("/group-match-bets/:GroupMatchBetId/group-match-bet-proposals/:GroupMatchBetProposalId/betpicks/", groupMatchBetProposalAcceptanceRoutes);

@@ -1,23 +1,34 @@
 //REQUIRED MODULES
 var express = require("express");
 var router = express.Router({mergeParams: true});
-var Bet = require("../models/bet");
+var GroupMatchBet = require("../models/group-match-bet");
+var GroupMatchBetProposal = require("../models/group-match-bet-proposal");
 var Comment = require("../models/comment");
 var middleware = require("../middleware");
 
 //NEW ROUTE
 router.get("/new", middleware.isLoggedIn, function(req, res){
-	//Find bet by ID
-  Bet.findById(req.params.id, function(err, foundBet){
+  //Find bet by ID
+  GroupMatchBet.findById(req.params.GroupMatchBetId, function(err, foundBet){
     if(err){
-      req.flash("error", "Bet not found.");
       console.log(err);
-    }
-    else{
-      //Render template page
-      res.render("comments/new.ejs", {
-        //Send bet object found earlier in the route
-        bet: foundBet
+      req.flash("error", "Bet Not Found");
+      res.redirect("back");
+    } else {
+      //Find bet proposal by ID
+      GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
+        if(err){
+          req.flash("error", "Bet Proposal Not Found.");
+          console.log(err);
+        }
+        else{
+          //Render template page
+          res.render("comments/new.ejs", {
+            //Send bet object found earlier in the route
+            bet: foundBet,
+            betProposal: foundBetProposal
+          });
+        }
       });
     }
   });
@@ -26,17 +37,17 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 //CREATE ROUTE
 router.post("/", middleware.isLoggedIn, function(req, res){
   //Lookup bet using ID
-  Bet.findById(req.params.id, function(err, foundBet){
+  GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
     if(err){
       console.log(err);
-      req.flash("error", "Something went wrong.");
-      res.redirect("/bets");
+      req.flash("error", "Bet Proposal Not Found.");
+      res.redirect("back");
     }
     else{
       //Create a new comment
       Comment.create(req.body.comment, function(err, createdComment){
         if(err){
-          req.flash("error", "Something went wrong.");
+          req.flash("error", "Could Not Create Comment.");
           console.log(err);
         }
         else {
@@ -46,11 +57,11 @@ router.post("/", middleware.isLoggedIn, function(req, res){
           //Save Comment
           createdComment.save();
           //Connect new comment to campground
-          foundBet.comments.push(createdComment._id);
-          foundBet.save();
-          //Redirect to bet show page
+          foundBetProposal.comments.push(createdComment._id);
+          foundBetProposal.save();
+          //Redirect to bet proposal show page
           req.flash("success", "Comment created.");
-          res.redirect("/bets/" + foundBet._id);
+          res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" + req.params.GroupMatchBetProposalId);
         }
       })
     }

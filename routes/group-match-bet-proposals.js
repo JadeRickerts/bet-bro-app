@@ -75,7 +75,7 @@ router.get("/:GroupMatchBetProposalId", function(req, res){
       req.flash("error", "Bet Not Found");
       res.redirect("back");
     } else {
-      GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
+      GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId).populate("comments").exec(function(err, foundBetProposal){
         if (err) {
           console.log(err);
           req.flash("error", "Bet Proposal Not Found");

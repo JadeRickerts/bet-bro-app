@@ -24,7 +24,13 @@ var groupMatchBetProposalSchema = mongoose.Schema({
 			betPickResult: String
 		}
 	],
-	betPickResult: String
+	betPickResult: String,
+	comments: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Comment"
+		}
+	]
 });
 
 module.exports = mongoose.model("GroupMatchBetProposal", groupMatchBetProposalSchema);

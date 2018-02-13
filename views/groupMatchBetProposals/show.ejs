@@ -12,6 +12,7 @@
 		</div>
 		<div class="col-md-9">
 			<h1><%= bet.homeTeamName %> vs <%= bet.awayTeamName %></h1>
+			<!-- Main Information -->
 			<div class="thumbnail">
 				<img class="img-responsive" src="<%= bet.imageURL %>">
 				<div class="caption-full">
@@ -29,6 +30,7 @@
 							Draw
 						<% } %>
 					</p>
+					<!-- Edit and Delete Proposal -->
 					<% if(currentUser && betProposal.author.id.equals(currentUser._id)) {%>
 						<a 	
 							href="/group-match-bets/<%= bet._id %>/
@@ -48,11 +50,12 @@
 							</button>
 						</form>
 					<% } %>
-
 				</div>
 			</div>
+			<!-- Accepted Bet Picks -->
 			<div class="well">
 				<h3>Accepted Bet Picks</h3>
+				<!-- Add Bet Pick To Proposal -->
 				<% if(currentUser && !betProposal.author.id.equals(currentUser._id)) {%>
 					<form 
 						action="/group-match-bets/<%= bet._id %>/
@@ -68,6 +71,7 @@
 					</form>
 				<% } %>
 				<% var count = 0 %>
+				<!-- Edit and Remove Bet Pick From Proposal -->
 				<% betProposal.acceptedBetPicks.forEach(function(betPick){ %>
 					<% count = count + 1;%>
 					<div class="row">
@@ -82,44 +86,80 @@
 								<% } %>
 							</p>
 							<% if(currentUser && !betProposal.author.id.equals(currentUser._id)) {%>
-							<form 
-								action=	"/group-match-bets/<%= bet._id %>/
-										group-match-bet-proposals/<%= betProposal._id %>/
-										betpicks/<%= betPick._id %>?_method=PUT"
-								method=	"POST">
-								<select class="form-control" name="betPickEdit">
-									<option value="homeWin"><%= bet.homeTeamName %> Win</option>
-									<option value="draw">Draw</option>
-									<option value="awayWin"><%= bet.awayTeamName %> Win</option>
-								</select>
-								<input type="text" value="<%= count %>" name="count" hidden="true">
-								<button 
-									class="btn btn-warning btn-xs" 
-									type="submit" 
-									formaction="/group-match-bets/<%= bet._id %>/
-									group-match-bet-proposals/<%= betProposal._id %>
-									/betpicks/<%= betPick._id %>?_method=PUT">
-									Edit
-								</button>
-							</form>
-							<form 
-								action=	"/group-match-bets/<%= bet._id %>/
-										group-match-bet-proposals/<%= betProposal._id %>/
-										betpicks/<%= betPick._id %>?_method=DELETE"
-								method=	"POST">
-								<input type="text" value="<%= count %>" name="count" hidden="true">
-								<button 
-									class="btn btn-danger btn-xs" 
-									type="submit" 
-									formaction="/group-match-bets/<%= bet._id %>/
-									group-match-bet-proposals/<%= betProposal._id %>
-									/betpicks/<%= betPick._id %>?_method=DELETE">
-									Delete
-								</button>
-							</form>
+								<form 
+									action=	"/group-match-bets/<%= bet._id %>/
+											group-match-bet-proposals/<%= betProposal._id %>/
+											betpicks/<%= betPick._id %>?_method=PUT"
+									method=	"POST">
+									<select class="form-control" name="betPickEdit">
+										<option value="homeWin"><%= bet.homeTeamName %> Win</option>
+										<option value="draw">Draw</option>
+										<option value="awayWin"><%= bet.awayTeamName %> Win</option>
+									</select>
+									<input type="text" value="<%= count %>" name="count" hidden="true">
+									<button 
+										class="btn btn-warning btn-xs" 
+										type="submit" 
+										formaction="/group-match-bets/<%= bet._id %>/
+										group-match-bet-proposals/<%= betProposal._id %>
+										/betpicks/<%= betPick._id %>?_method=PUT">
+										Edit
+									</button>
+								</form>
+								<form 
+									action=	"/group-match-bets/<%= bet._id %>/
+											group-match-bet-proposals/<%= betProposal._id %>/
+											betpicks/<%= betPick._id %>?_method=DELETE"
+									method=	"POST">
+									<input type="text" value="<%= count %>" name="count" hidden="true">
+									<button 
+										class="btn btn-danger btn-xs" 
+										type="submit" 
+										formaction="/group-match-bets/<%= bet._id %>/
+										group-match-bet-proposals/<%= betProposal._id %>
+										/betpicks/<%= betPick._id %>?_method=DELETE">
+										Delete
+									</button>
+								</form>
 							<% } %>
 						</div>
+					</div>
 				<% }); %>
+			</div>
+			<!-- Comments -->
+			<div class="well">
+				<h3>Comments</h3>
+				<div class="text-right">
+					<a 
+						href="/group-match-bets/<%= bet._id %>/
+							group-match-bet-proposals/<%= betProposal._id %>/
+							comments/new" 
+						class="btn btn-success">
+							Add Comment
+					</a>
+				</div>
+				<hr>
+				<% betProposal.comments.forEach(function(comment){ %>
+					<div class="row">
+						<div class="col-md-12">
+							<strong><%= comment.author.username %></strong>
+							<span class="pull-right">10 days ago</span>
+						</div>
+					</div>
+					<p>
+						<%= comment.text %>
+					</p>
+					<% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+						<a 
+							href="/bets/<%= bet._id %>/comments/<%= comment._id %>/edit"
+							class="btn btn-xs btn-warning">
+							Edit
+						</a>
+						<form id="delete-form" action="/bets/<%= bet._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+							<button class="btn btn-xs btn-danger">Delete</button>
+						</form>
+					<% } %>
+				<% }) %>
 			</div>
 		</div>
 	</div>
