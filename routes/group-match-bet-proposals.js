@@ -59,7 +59,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
           foundBet.save();
           //Redirect to bet show page
           req.flash("success", "Bet Proposal created.");
-          res.redirect("/group-match-bets/" + foundBet._id);
+          res.redirect("/group-match-bets/" + foundBet._id + "/group-match-bet-proposals/" + createdBetProposal._id);
         }
       })
     }
