@@ -21,15 +21,6 @@
 					<p><strong>Stadium: </strong><%= bet.stadium %></p>
 					<p><strong>Bet Proposal Amount: </strong><%= betProposal.amount %></p>
 					<p><strong>Number of Betters Allowed: </strong><%= betProposal.numberOfBetters %></p>
-					<p><strong>Bro's Pick: </strong>
-						<% if(betProposal.betPick == "homeWin") { %>
-							<%= bet.homeTeamName %> Win
-						<% } else if (betProposal.betPick == "awayWin") { %>
-							<%= bet.awayTeamName %> Win
-						<% } else { %>  
-							Draw
-						<% } %>
-					</p>
 					<!-- Edit and Delete Proposal -->
 					<% if(currentUser && betProposal.author.id.equals(currentUser._id)) {%>
 						<a 	
@@ -52,9 +43,9 @@
 					<% } %>
 				</div>
 			</div>
-			<!-- Accepted Bet Picks -->
+			<!-- Bet Picks -->
 			<div class="well">
-				<h3>Accepted Bet Picks</h3>
+				<h3>Bet Picks</h3>
 				<!-- Add Bet Pick To Proposal -->
 				<% if(currentUser && !betProposal.author.id.equals(currentUser._id)) {%>
 					<form 
@@ -72,7 +63,7 @@
 				<% } %>
 				<% var count = 0 %>
 				<!-- Edit and Remove Bet Pick From Proposal -->
-				<% betProposal.acceptedBetPicks.forEach(function(betPick){ %>
+				<% betProposal.betPicks.forEach(function(betPick){ %>
 					<% count = count + 1;%>
 					<div class="row">
 						<div class="col-md-12">

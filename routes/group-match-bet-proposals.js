@@ -35,13 +35,17 @@ router.post("/", middleware.isLoggedIn, function(req, res){
     else{
       //Create a new comment
       var betAmount = req.body.betAmount,
-      betPick = req.body.betPick,
       numberOfBetters = req.body.numberOfBetters,
       betProposal = {
-      	betPick: betPick,
       	numberOfBetters: numberOfBetters,
-      	amount: betAmount
-      };
+        amount: betAmount }, 
+        userBetPick = {
+        author: {
+          id: req.user._id,
+          username: req.user.username
+        },
+        betPick: req.body.betPick
+      }
 
       GroupMatchBetProposal.create(betProposal, function(err, createdBetProposal){
         if(err){
@@ -50,8 +54,10 @@ router.post("/", middleware.isLoggedIn, function(req, res){
         }
         else {
           //Add username and ID to comment
+          console.log("This is the object I wanna push: " + userBetPick);
           createdBetProposal.author.id = req.user._id;
           createdBetProposal.author.username = req.user.username;
+          createdBetProposal.betPicks.push(userBetPick);
           //Save Comment
           createdBetProposal.save();
           //Connect new comment to campground

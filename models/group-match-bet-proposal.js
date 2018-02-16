@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 
 var groupMatchBetProposalSchema = mongoose.Schema({
-	betPick: String,
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -11,7 +10,7 @@ var groupMatchBetProposalSchema = mongoose.Schema({
 	},
 	amount: Number,
 	numberOfBetters: Number,
-	acceptedBetPicks: [
+	betPicks: [
 		{
 			author: {
 				id: {
@@ -24,7 +23,6 @@ var groupMatchBetProposalSchema = mongoose.Schema({
 			betPickResult: String
 		}
 	],
-	betPickResult: String,
 	comments: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
