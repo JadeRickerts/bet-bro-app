@@ -53,8 +53,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
           console.log(err);
         }
         else {
-          //Add username and ID to comment
-          console.log("This is the object I wanna push: " + userBetPick);
+          //Add username and ID to bet pick
           createdBetProposal.author.id = req.user._id;
           createdBetProposal.author.username = req.user.username;
           createdBetProposal.betPicks.push(userBetPick);
@@ -145,6 +144,15 @@ router.put("/:GroupMatchBetProposalId", middleware.checkBetProposalOwnership, fu
           req.flash("error", "Bet Proposal Not Found");
           res.redirect("back");
         } else {
+          GroupMatchBetProposal.update({'betPicks.author.username': req.user.username}, {'$set': {
+            'betPicks.$.betPick': req.body.betPick
+          }}, function(err){
+            if (err) {
+              console.log(err);
+              req.flash("error", "Couldn't Update Bet Pick");
+              req.redirect("back");
+            }
+          })
           req.flash("success", "Bet Proposal Updated");
           res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" + req.params.GroupMatchBetProposalId);
         }
