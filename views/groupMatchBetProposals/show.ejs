@@ -46,21 +46,7 @@
 			<!-- Bet Picks -->
 			<div class="well">
 				<h3>Bet Picks</h3>
-				<!-- Add Bet Pick To Proposal -->
-				<% if(currentUser && !betProposal.author.id.equals(currentUser._id)) {%>
-					<form 
-						action="/group-match-bets/<%= bet._id %>/
-								group-match-bet-proposals/<%= betProposal._id %>/
-								betpicks/" 
-						method=	"POST">
-						<select class="form-control" name="betPick">
-	                        <option value="homeWin"><%= bet.homeTeamName %> Win</option>
-	                        <option value="draw">Draw</option>
-	                        <option value="awayWin"><%= bet.awayTeamName %> Win</option>
-	                    </select>
-	                    <button class="btn btn-success" type="submit" formaction="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/betpicks/">Accept Bet</button>
-					</form>
-				<% } %>
+				
 				<% var count = 0 %>
 				<!-- Edit and Remove Bet Pick From Proposal -->
 				<% betProposal.betPicks.forEach(function(betPick){ %>
@@ -76,7 +62,7 @@
 									Draw
 								<% } %>
 							</p>
-							<% if(currentUser && !betProposal.author.id.equals(currentUser._id)) {%>
+							<% if(currentUser && betProposal.author.id.equals(currentUser._id)) {%>
 								<form 
 									action=	"/group-match-bets/<%= bet._id %>/
 											group-match-bet-proposals/<%= betProposal._id %>/
@@ -116,6 +102,21 @@
 						</div>
 					</div>
 				<% }); %>
+				<!-- Add Bet Pick To Proposal -->
+				<% if(currentUser && !betProposal.author.id.equals(currentUser._id)) { %>
+					<form 
+						action="/group-match-bets/<%= bet._id %>/
+								group-match-bet-proposals/<%= betProposal._id %>/
+								betpicks/" 
+						method=	"POST">
+						<select class="form-control" name="betPick">
+	                        <option value="homeWin"><%= bet.homeTeamName %> Win</option>
+	                        <option value="draw">Draw</option>
+	                        <option value="awayWin"><%= bet.awayTeamName %> Win</option>
+	                    </select>
+	                    <button class="btn btn-success" type="submit" formaction="/group-match-bets/<%= bet._id %>/group-match-bet-proposals/<%= betProposal._id %>/betpicks/">Accept Bet</button>
+					</form>
+				<% } %>
 			</div>
 			<!-- Comments -->
 			<div class="well">
