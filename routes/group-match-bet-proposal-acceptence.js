@@ -25,7 +25,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
         author: author,
         betPick: betPick
       }
-      foundBetProposal.acceptedBetPicks.push(acceptedBetPick);
+      foundBetProposal.betPicks.push(acceptedBetPick);
       foundBetProposal.save();
       req.flash("success", "Bet Proposal Accepted");
       res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
@@ -35,7 +35,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 });
 
 //UPDATE ROUTE
-router.put("/:betPickId", middleware.checkBetProposalBetPickOwnership, function(req, res){
+router.put("/:betPickId", function(req, res){
   //Lookup bet using ID
   GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
     if(err){
@@ -44,43 +44,46 @@ router.put("/:betPickId", middleware.checkBetProposalBetPickOwnership, function(
       res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
         + req.params.GroupMatchBetProposalId);
     } else {
-      foundBetProposal.acceptedBetPicks[req.body.count-1].betPick = req.body.betPickEdit;
-      foundBetProposal.save(function(err){
+        GroupMatchBetProposal.update({'betPicks.author.username': req.user.username}, {'$set': {
+          'betPicks.$.betPick': req.body.betPickEdit
+        }}, function(err){
         if (err) {
           console.log(err);
-          req.flash("error", "Could Not Edit Bet Proposal Bet Pick");
-          req.redirect("back");
-        }
-      req.flash("success", "Bet Proposal Bet Pick Successfully Edited");
-      res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
-        + req.params.GroupMatchBetProposalId);
+          req.flash("error", "Couldn't Update Bet Pick");
+          res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
+            + req.params.GroupMatchBetProposalId);
+        } else {
+          req.flash("success", "Bet Proposal Bet Pick Successfully Edited");
+          res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
+            + req.params.GroupMatchBetProposalId);
+          }
       });
     }
   });
 });
 
-
 //DESTROY ROUTE
-router.delete("/:betPickId", middleware.checkBetProposalBetPickOwnership, function(req, res){
-  //Lookup bet using ID
+router.delete("/:betPickId", function(req, res){
   GroupMatchBetProposal.findById(req.params.GroupMatchBetProposalId, function(err, foundBetProposal){
-    if(err){
+    if (err) {
       console.log(err);
-      req.flash("error", "Bet Proposal Not Found");
+      req.flash("error", "Couldn't Find Bet Proposal");
       res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
         + req.params.GroupMatchBetProposalId);
     } else {
-      foundBetProposal.acceptedBetPicks[req.body.count-1].remove();
-      foundBetProposal.save(function(err){
-        if (err) {
+      foundBetProposal.betPicks[req.body.count-1].remove();
+      foundBetProposal.save(function (err){
+        if(err){
           console.log(err);
-          req.flash("error", "Could Not Edit Bet Proposal Bet Pick");
-          req.redirect("back");
-        }
-      req.flash("success", "Bet Proposal Bet Pick Successfully Deleted");
-      res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
+          req.flash("error", "Couldn't Find Bet Proposal");
+          res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
         + req.params.GroupMatchBetProposalId);
-      });
+        } else {
+          req.flash("success", "Bet Pick Successfully Deleted");
+          res.redirect("/group-match-bets/" + req.params.GroupMatchBetId + "/group-match-bet-proposals/" 
+        + req.params.GroupMatchBetProposalId);
+        }
+      }); 
     }
   });
 });

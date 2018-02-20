@@ -43,14 +43,13 @@
 					<% } %>
 				</div>
 			</div>
+			<% var count = 0; %>
 			<!-- Bet Picks -->
 			<div class="well">
 				<h3>Bet Picks</h3>
-				
-				<% var count = 0 %>
 				<!-- Edit and Remove Bet Pick From Proposal -->
 				<% betProposal.betPicks.forEach(function(betPick){ %>
-					<% count = count + 1;%>
+				<% count = count + 1; %>
 					<div class="row">
 						<div class="col-md-12">
 							<p><strong><%= betPick.author.username %></strong> - 
@@ -62,7 +61,7 @@
 									Draw
 								<% } %>
 							</p>
-							<% if(currentUser && betProposal.author.id.equals(currentUser._id)) {%>
+							<% if(currentUser && betPick.author.id.equals(currentUser._id)){ %>
 								<form 
 									action=	"/group-match-bets/<%= bet._id %>/
 											group-match-bet-proposals/<%= betProposal._id %>/
@@ -73,7 +72,6 @@
 										<option value="draw">Draw</option>
 										<option value="awayWin"><%= bet.awayTeamName %> Win</option>
 									</select>
-									<input type="text" value="<%= count %>" name="count" hidden="true">
 									<button 
 										class="btn btn-warning btn-xs" 
 										type="submit" 
@@ -88,7 +86,7 @@
 											group-match-bet-proposals/<%= betProposal._id %>/
 											betpicks/<%= betPick._id %>?_method=DELETE"
 									method=	"POST">
-									<input type="text" value="<%= count %>" name="count" hidden="true">
+									<input type="text" value="<%= count %>" hidden="true" name="count">
 									<button 
 										class="btn btn-danger btn-xs" 
 										type="submit" 
